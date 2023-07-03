@@ -17,3 +17,4 @@ async function connected(){
         console.log("\nError: ",error);
     }
 }
+export {connected}
