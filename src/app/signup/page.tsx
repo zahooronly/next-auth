@@ -3,8 +3,11 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const SignupPage = () => {
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [loader, setLoader] = useState(false);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -14,14 +17,20 @@ const SignupPage = () => {
   const signupHandler = async () => {
     // Handle sign up logic here
     try {
-    } catch (error) {
+      setLoader(true);
+      const response = await axios.post("/api/users/signup/", user);
+      console.log("Signup success", response.data);
+      router.push("/login");
+    } catch (error: any) {
+      console.log("Signup failed", error.message);
+      toast.error(error.message);
     } finally {
+      setLoader(false);
     }
   };
 
   const router = useRouter();
 
-  const [buttonDisabled, setButtonDisabled] = useState(false);
   useEffect(() => {
     if (
       user.email.length > 0 &&
@@ -37,9 +46,9 @@ const SignupPage = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white rounded-lg  shadow-lg p-8 ">
-        {/* <h1 className="text-4xl font-bold mb-6 text-center z-50"> */}
-        Signup Here
-        {/* </h1> */}
+        <h1 className="text-4xl text-gray-700 font-bold mb-6 text-center z-50">
+          {loader ? "Loading..." : "Signup"}
+        </h1>
         <div className="flex flex-col space-y-4">
           <label className="text-gray-700 font-semibold" htmlFor="username">
             Username
