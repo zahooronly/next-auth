@@ -2,24 +2,48 @@
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
 
 const LoginPage = () => {
+  const router = useRouter();
+  const [loader, setLoader] = useState(false); // [loader, setLoader
+  const [buttonDisabled, setButtonDisabled] = useState(true); // [buttonDisabled, setButtonDisabled
+
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
 
+  useEffect(() => {
+    if (user.email.length > 0 && user.password.length > 0) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [user]);
   const loginHandler = async () => {
     // Handle sign up logic here
+    try {
+      setLoader(true);
+      const response = await axios.post("/api/users/login/", user);
+      console.log("Login success", response.data);
+      toast.success("Login success");
+      router.push("/profile");
+    } catch (error: any) {
+      return console.log("Login failed", error.message);
+      toast.error(error.message);
+    } finally {
+      setLoader(false);
+    }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white rounded-lg  shadow-lg p-8 ">
-        {/* <h1 className="text-4xl font-bold mb-6 text-center z-50"> */}
-        Signup Here
-        {/* </h1> */}
+        <h1 className="text-4xl text-gray-700 font-bold mb-6 text-center z-50">
+          {loader ? "Loading..." : "Login Here"}
+        </h1>
         <div className="flex flex-col space-y-4">
           <label className="text-gray-700 font-semibold" htmlFor="email">
             Email
@@ -47,7 +71,7 @@ const LoginPage = () => {
             className="border-2 border-gray-500 rounded-lg px-4 py-2 bg-gray-500 text-white font-bold hover:bg-gray-700 transition duration-300"
             onClick={loginHandler}
           >
-            Login here
+            {buttonDisabled ? "Fill all fields" : "Login"}
           </button>
           <Link href="/signup">
             <p className="text-blue-700 text-center border-gray-500 rounded-lg">
