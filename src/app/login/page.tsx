@@ -31,7 +31,7 @@ const LoginPage = () => {
       toast.success("Login success", response.data);
       // toast.success(response.data);
       <Toaster />;
-      router.push("/profile/ZahoorOnly");
+      router.push("/profile");
     } catch (error: any) {
       // toast.error(error.message);
       toast.error("Login Failed", error.message);
