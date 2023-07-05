@@ -3,7 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
+import { Toaster, toast } from "react-hot-toast";
 
 const LoginPage = () => {
   const router = useRouter();
@@ -27,12 +27,16 @@ const LoginPage = () => {
     try {
       setLoader(true);
       const response = await axios.post("/api/users/login/", user);
-      console.log("Login success", response.data);
-      toast.success("Login success");
-      router.push("/profile");
+      // console.log("Login success", response.data);
+      toast.success("Login success", response.data);
+      // toast.success(response.data);
+      <Toaster />;
+      router.push("/profile/ZahoorOnly");
     } catch (error: any) {
-      return console.log("Login failed", error.message);
-      toast.error(error.message);
+      // toast.error(error.message);
+      toast.error("Login Failed", error.message);
+      // return console.log("Login failed", error.message);
+      <Toaster />;
     } finally {
       setLoader(false);
     }
