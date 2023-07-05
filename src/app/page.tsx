@@ -6,8 +6,8 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push("/signup"); // Redirect to signup page
-  }, []); // Empty dependency array ensures this runs only once on component mount
+    router.push("/signup");
+  }, []);
 
-  return null; // Return null or any other placeholder content since we are redirecting
+  return null;
 }

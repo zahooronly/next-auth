@@ -1,7 +1,5 @@
-// logout route
 import { NextResponse } from "next/server";
 import toast from "react-hot-toast";
-// Router
 export async function GET(){
     try {
         const response=await NextResponse.json({

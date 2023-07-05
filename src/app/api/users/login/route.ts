@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
             email:user.email,
         }
         // create token
-        const tocken=await jwt.sign(tokenData,process.env.TOKEN_SECRET!,{
+        const token=await jwt.sign(tokenData,process.env.TOKEN_SECRET!,{
             expiresIn:"1d",
         });
 
@@ -40,10 +40,8 @@ export async function POST(request: NextRequest) {
         })
 
         // set cookie
-        response.cookies.set("tocken",tocken,{
+        response.cookies.set("token",token,{
             httpOnly:true,
-            // secure:true,
-            // sameSite:"strict",
         })
         return response;
     } catch (error: any) {

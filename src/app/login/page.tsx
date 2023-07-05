@@ -27,16 +27,17 @@ const LoginPage = () => {
     try {
       setLoader(true);
       const response = await axios.post("/api/users/login/", user);
-      // console.log("Login success", response.data);
-      toast.success("Login success", response.data);
+      console.log("Login success", response.data);
+      toast.success("Login success");
+      // toast.success("Login success", response.data);
       // toast.success(response.data);
       <Toaster />;
       router.push("/profile");
     } catch (error: any) {
       // toast.error(error.message);
       toast.error("Login Failed", error.message);
-      // return console.log("Login failed", error.message);
       <Toaster />;
+      // return console.log("Login failed", error.message);
     } finally {
       setLoader(false);
     }
@@ -46,7 +47,7 @@ const LoginPage = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white rounded-lg  shadow-lg p-8 ">
         <h1 className="text-4xl text-gray-700 font-bold mb-6 text-center z-50">
-          {loader ? "Loading..." : "Login Here"}
+          {loader ? "Processing..." : "Login Here"}
         </h1>
         <div className="flex flex-col space-y-4">
           <label className="text-gray-700 font-semibold" htmlFor="email">
